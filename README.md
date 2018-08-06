@@ -20,12 +20,6 @@ sudo docker logs devbox-app
 sudo docker logs devbox-db
 ```
 
-## Auth to Aidbox container registry
-
-```
-cat ./registry-auth.json | sudo docker login --username _json_key --password-stdin  us.gcr.io/aidbox2-205511
-```
-
 ## MK JWT keys
 ```
 ssh-keygen -t rsa -b 4096 -f jwtRS256.key
