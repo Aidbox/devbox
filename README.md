@@ -13,10 +13,10 @@ vim docker-config.env
 ## Show logs
 
 ```
-# show app loss
+# show app logs
 sudo docker logs devbox-app
 
-# show db loss
+# show db logs
 sudo docker logs devbox-db
 ```
 
