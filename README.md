@@ -1,4 +1,4 @@
-#Configure
+# Configure
 
 ```
 vim docker-config.env
@@ -13,17 +13,11 @@ vim docker-config.env
 ## Show logs
 
 ```
-# show app loss
+# show app logs
 sudo docker logs devbox-app
 
-# show db loss
+# show db logs
 sudo docker logs devbox-db
-```
-
-## Auth to Aidbox container registry
-
-```
-cat ./registry-auth.json | sudo docker login --username _json_key --password-stdin  us.gcr.io/aidbox2-205511
 ```
 
 ## MK JWT keys
