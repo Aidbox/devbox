@@ -11,14 +11,17 @@ services:
       - "${PORT}:${PORT}"
     volumes:
       - ./config:/var/config
+      - "${UPLOAD_DIR}:/var/static"
     environment:
-        AIDBOX_CONFIG: /var/config/config.edn
-        PORT:        "${PORT}"
-        PGHOST:      "${PGHOST}"
-        PGPORT:      "${PGPORT}" 
-        PGUSER:      "${PGUSER}"
-        PGPASSWORD:  "${PGPASSWORD}"
-        PGDATABASE:  "${PGDATABASE}"
+      FILE_ROOT:   /var/static
+      AIDBOX_CONFIG: /var/config/config.edn
+      PORT:        "${PORT}"
+      PORT:        "${PORT}"
+      PGHOST:      "${PGHOST}"
+      PGPORT:      "${PGPORT}" 
+      PGUSER:      "${PGUSER}"
+      PGPASSWORD:  "${PGPASSWORD}"
+      PGDATABASE:  "${PGDATABASE}"
   db:
     image: "${DEVBOX_DB}" 
     container_name: devbox-db
