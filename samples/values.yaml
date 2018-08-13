@@ -13,7 +13,7 @@ ingress:
   hosts:
     - host: my.host 
   annotations:
-    ingress.kubernetes.io/proxy-body-size: 50m
+    ingress.kubernetes.io/proxy-body-size: 30m
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
 
@@ -31,7 +31,7 @@ aidboxdb:
   persistence:
     enabled: true 
     type: "pvc"
-    size: 10GB
+    size: 10Gi
 #  resources:
 #    requests:
 #      cpu: "1"
