@@ -1,0 +1,16 @@
+replicaCount: 1
+image:
+  repository: aidbox/aidboxdb
+  tag: 0.0.1-alpha3
+  pullPolicy: IfNotPresent
+
+service:
+  port: 5432
+
+user: postgres
+database: mydb
+password: postgres
+
+persistence:
+  enabled: false
+  size: 20Gi
