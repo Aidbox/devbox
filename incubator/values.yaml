@@ -1,0 +1,17 @@
+replicaCount: 1
+image:
+  repository: aidbox/devbox
+  tag: 0.1.0
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 8080
+
+aidboxdb:
+  database: devbox 
+  user: postgres
+  password: postgres
+  persistence:
+    enabled: false

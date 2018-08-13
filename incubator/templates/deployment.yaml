@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        {{ if .Values.openidKeys }}
+        - name: openid-rsa
+          mountPath: /var/openid-rsa
+          readOnly: true
+        {{ end }}
+        {{ if .Values.resources }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        {{ end }}
+        env:
+        - name: PORT
+          value: "{{ .Values.service.internalPort }}"
+        - name: PGHOST
+          value: {{ template "aidboxdb.fullname" . }}
+        - name: PGPORT
+          value: "5432"
+        - name: POSTGRES_DB
+          value: {{ .Values.adiboxdb.database }}
+        - name: PGUSER
+          value:  {{ .Values.aidboxdb.user }}
+        - name: PGPASSWORD
+          value:  {{ .Values.aidboxdb.password }}
+        - name: PGDATABASE
+          value: {{ .Values.aidboxdb.database }}
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+      volumes:
+      {{ if .Values.openidKeys }}
+      - name: openid-rsa
+        secret:
+          secretName: {{ .Values.openidKeys }}
+          items:
+          - key: private
+            path: id_rsa
+          - key: public
+            path: id_rsa.pub
+      {{ end }}
+
