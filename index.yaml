@@ -2,11 +2,11 @@ apiVersion: v1
 entries:
   devbox:
   - apiVersion: v1
-    created: 2018-08-13T17:40:14.172004+03:00
+    created: 2018-08-13T18:42:00.707033+03:00
     description: Devbox chart
-    digest: 904d06d2f6c8483b75eb9c754d5b4d5f5e13b6844c6f3bce7f2c19df5487f79a
+    digest: 61ff54008b0b6f3a41fd78a476ab5ed8e396d159adc038449b3ddbd7d56a4c31
     name: devbox
     urls:
-    - https://aidbox.github.io/devbox/incubator/devbox-0.0.1.tgz
-    version: 0.0.1
-generated: 2018-08-13T17:40:14.171408+03:00
+    - https://aidbox.github.io/devbox/incubator/devbox-0.0.2.tgz
+    version: 0.0.2
+generated: 2018-08-13T18:42:00.706508+03:00

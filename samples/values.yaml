@@ -17,21 +17,22 @@ ingress:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
 
-resources:
-  requests:
-    cpu: "1"
-    memory: "1Gi"
+#resources:
+#  requests:
+#    cpu: "1"
+#    memory: "1Gi"
 
 aidboxdb:
-  database: devbox 
-  user: postgres
-  password: postgres
+  database: "devbox" 
+  user: "postgres"
+  password: "postgres"
   #nodeSelector:
   #  pg: master
   persistence:
-    enabled: false
-    type: node
-  resources:
-    requests:
-      cpu: "1"
-      memory: "1Gi"
+    enabled: true 
+    type: "pvc"
+    size: 10GB
+#  resources:
+#    requests:
+#      cpu: "1"
+#      memory: "1Gi"
