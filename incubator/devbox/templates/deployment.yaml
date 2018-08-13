@@ -33,7 +33,7 @@ spec:
         - name: PGPORT
           value: "5432"
         - name: POSTGRES_DB
-          value: {{ .Values.adiboxdb.database }}
+          value: {{ .Values.aidboxdb.database }}
         - name: PGUSER
           value:  {{ .Values.aidboxdb.user }}
         - name: PGPASSWORD
