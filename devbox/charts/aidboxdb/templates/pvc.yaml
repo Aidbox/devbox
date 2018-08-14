@@ -1,4 +1,4 @@
-{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) -}}
+{{- if and .Values.persistence.enabled (eq .Values.persistence.type "pvc")  (not .Values.persistence.existingClaim) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -8,8 +8,14 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+
+{{ if .Values.persistence.annotations }}
   annotations:
-    volume.beta.kubernetes.io/storage-class: general
+    {{- range $key, $value := .Values.persistence.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{ end -}}
+{{ end }}
+
 spec:
   accessModes:
     - ReadWriteOnce
