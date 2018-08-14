@@ -8,9 +8,13 @@ service:
   port: 5432
 
 user: postgres
-database: mydb
 password: postgres
+database: devbox
 
 persistence:
   enabled: false
+  type: "pvc"
   size: 20Gi
+  annotations:
+    volume.beta.kubernetes.io/storage-class: standard
+    volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/gce-pd

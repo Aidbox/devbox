@@ -39,6 +39,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
+              subPath: pgdata
           ports:
             - containerPort: 5432
           
