@@ -1,2 +1,3 @@
-{:resources {:Entity {:Foooo {:type "resource"}}}
- :config {}}
+{:import {
+          ;; :icd-10 {}
+          }}
