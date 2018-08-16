@@ -62,16 +62,16 @@ of this repository.
 
 ## Running multiple devbox instances
 
-TODO
+To run multiple instances you can use `docker-compose up` command
+with `-p` argument to provide prefix for created containers, i.e.:
+
+    $ docker-compose up -d -p devbox1
+    $ docker-compose up -d -p devbox2
+
+The command above will start two devbox instances.
 
 ## Accessing logs
 
-TODO: better explanation
+Use `docker logs` command to access devbox logs:
 
-```
-# show app logs
-sudo docker logs devbox-app
-
-# show db logs
-sudo docker logs devbox-db
-```
+    $ docker logs -f devbox_devbox_1
