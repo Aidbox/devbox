@@ -1,0 +1,17 @@
+.base {
+  padding: 10px 30px 20px 30px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+.content {
+  display: flex;
+}
+.patientList {
+  width: 342px;
+  padding-right: 15px;
+  flex-shrink: 0;
+}
+.patientInfo {
+  width: 100%;
+  padding-left: 15px;
+}
