@@ -1,13 +1,6 @@
-# aidbox-kata
+# Aidbox React frontend sample
 
-### Backend 
-
-https://wenlogic.aidbox.app
-
-Now is temporary available across Basic auth. In the near future we will remake it to Oauth2.0 with Open id
-```
-'Authorization': 'Basic d2VubG9naWM6d2VubG9naWNwYXNzd29yZA=='
-```
+TODO: write some good description, man
 
 ### Run local
 
