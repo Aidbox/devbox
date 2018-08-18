@@ -1,0 +1,18 @@
+.pagination {
+  padding: 0;
+  list-style: none;
+
+  > li {
+    display: inline-block;
+    margin-right: 5px;
+  }
+}
+.pageItem {
+  button {
+  }
+}
+.curPageItem {
+  button {
+    font-weight: bold;
+  }
+}

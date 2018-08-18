@@ -1,0 +1,13 @@
+plugins:
+  - jsx-a11y
+extends:
+  - standard-react
+  - plugin:jsx-a11y/recommended
+rules:
+  react/jsx-no-bind: 0
+  jsx-a11y/no-autofocus: 0
+  jsx-a11y/label-has-for: 0
+  jsx-quotes:
+    - error
+    - prefer-single
+
