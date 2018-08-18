@@ -8,7 +8,7 @@ TODO: write some good description, man
 nvm install 8.9.4
 nvm use 8.9.4
 npm install
-npm run start
+AIDBOX_URL=http://localhost:8888 npm run start
 ```
 
 Visit http://localhost:3000/
