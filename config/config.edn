@@ -1,3 +1,8 @@
-{:import {
+{
+ :config {
+          ;; :_totalMethod :count
+          }
+ :import {
           ;; :icd-10 {}
-          }}
+          }
+}
