@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   devbox:
-    image: "aidbox/devbox:0.1.1"
+    image: "aidbox/devbox:0.1.2"
     depends_on:
       - "devbox-db"
     links:
