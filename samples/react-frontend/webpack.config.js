@@ -1,6 +1,7 @@
 /* eslint-disable node/no-unpublished-require */
 
 const p = require('path')
+const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
 
@@ -99,6 +100,9 @@ module.exports = {
     new WebpackBuildNotifierPlugin({
       title: 'ehr Webpack Build'
     }),
+    new webpack.DefinePlugin({
+      AIDBOX_URL: JSON.stringify(process.env["AIDBOX_URL"])
+    })
   ],
   stats: { children: false }, // extract-text-webpack-plugin - disable logs
   devtool: 'source-map',
