@@ -4,7 +4,7 @@ import createDebug from "debug";
 const debug = createDebug("ehr:api"); // eslint-disable-line no-unused-vars
 
 const myAxios = axios.create({
-  baseURL: process.env["AIDBOX_URL"]
+  baseURL: AIDBOX_URL
 });
 
 if (process.env.NODE_ENV === "development") {
@@ -36,8 +36,12 @@ export const getAllPatients = function({ page }) {
 };
 
 export const getPatientByName = function({ patientName, page }) {
+  let url = `/fhir/Patient?_page=${page}`;
+  if (patientName && patientName.length >= 0) {
+    url += `&name=${patientName}`;
+  }
   return myAxios
-    .get(`/fhir/Patient?name=${patientName}&_page=${page}`)
+    .get(url)
     .then(function(response) {
       return response.data;
     });
