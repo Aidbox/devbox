@@ -1,0 +1,12 @@
+apiVersion: v1
+entries:
+  devbox:
+  - apiVersion: v1
+    created: 2018-08-24T11:57:52.916639+03:00
+    description: Devbox chart
+    digest: 2e9f2ef273a01c44113acc9a465bffeb835bf962d55e09dafc76e02286fbe7fa
+    name: devbox
+    urls:
+    - https://aidbox.github.io/devbox/helm/devbox-0.1.3.tgz
+    version: 0.1.3
+generated: 2018-08-24T11:57:52.915939+03:00
