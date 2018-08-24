@@ -16,6 +16,8 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         volumeMounts:
+        - name: config-volume
+          mountPath: /var/config
         {{ if .Values.openidKeys }}
         - name: openid-rsa
           mountPath: /var/openid-rsa
@@ -32,6 +34,8 @@ spec:
           value: {{ template "aidboxdb.fullname" . }}
         - name: PGPORT
           value: "5432"
+        - name: AIDBOX_CONFIG
+          value: "/var/config/config.edn"
         - name: POSTGRES_DB
           value: {{ .Values.aidboxdb.database | quote }}
         - name: PGUSER
@@ -43,6 +47,9 @@ spec:
         ports:
         - containerPort: {{ .Values.service.internalPort }}
       volumes:
+      - name: config-volume
+        configMap:
+          name: {{ template "fullname" . }}
       {{ if .Values.openidKeys }}
       - name: openid-rsa
         secret:
