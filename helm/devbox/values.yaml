@@ -4,6 +4,17 @@ image:
   tag: 0.1.3
   pullPolicy: Always
 
+ingress:
+  enabled: false
+  annotations:
+    ingress.kubernetes.io/client-max-body-size: 64m
+    ingress.kubernetes.io/proxy-body-size: 64m
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 64m
+    nginx.org/client-max-body-size: 64m
+
+config: >-
+  {:config {}}
 service:
   type: ClusterIP
   externalPort: 80
