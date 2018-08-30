@@ -1,0 +1,5 @@
+<h1 style="text-align:center">Medical card</h1>
+<div class="layout">
+    <app-patients-list (onSelect)="onSelect($event)" [row]="selectedRow" (createNewPatient)="createNewPatient($event)"></app-patients-list>
+    <app-patient-form class="form-size" [patient]="selectedPatient" (createNewPatient)="createNewPatient($event)"></app-patient-form>
+</div>
