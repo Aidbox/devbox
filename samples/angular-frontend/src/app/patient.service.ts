@@ -27,18 +27,17 @@ export class PatientService {
         private store: Store<AppState>
     ) { }
 
-    getPatients(patientName = '', page = 0): void {
-        // TODO page var
-        let url = `${this.baseURL}/fhir/Patient?_page=0&_totalMethod=count`;
+    getPatients(patientName = '', page = 1, count = 10): void {
+        let url = `${this.baseURL}/fhir/Patient?_page=${page}&_count=${count}`;
         this.store.dispatch({ type: LOADING });
         if (patientName && patientName.length >= 0) {
             url += `&name=${patientName}`;
         }
         this.http.get(url).subscribe(patients  => {
             console.log('patients', patients);
-            const l = 10;
-            // this.store.dispatch({ type: RECEIVE, data: patients["entry"].map(p => fhirToObject(p.resource))});
-            this.store.dispatch({ type: RECEIVE, data: patients["entry"].slice(l * page, l * page + l).map(p => fhirToObject(p.resource))});
+            // const l = 10;
+            this.store.dispatch({ type: RECEIVE, data: patients["entry"].map(p => fhirToObject(p.resource))});
+            // this.store.dispatch({ type: RECEIVE, data: patients["entry"].slice(l * page, l * page + l).map(p => fhirToObject(p.resource))});
             this.store.dispatch({ type: SET, count: patients["total"], selectedPage: page });
 
         });
