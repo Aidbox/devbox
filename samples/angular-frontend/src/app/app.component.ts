@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { Patient } from './patient';
+import { PatientService } from './patient.service';
+import { Observable } from 'rxjs';
+import { PatientState } from './reducer/patient';
+import { Store, select } from '@ngrx/store';
+import { AppState } from './reducer';
 
 @Component({
   selector: 'app-root',
@@ -9,16 +14,16 @@ import { Patient } from './patient';
 export class AppComponent {
     title = 'angular-frontend';
     selectedPatient: Patient = new Patient();
-    selectedRow: number;
+    selectedPatientId: number;
 
-    onSelect({ patient, idx }): void {
+    onSelect(patient): void {
         this.selectedPatient = patient;
-        this.selectedRow = idx;
+        this.selectedPatientId = patient.id;
     }
 
-    createNewPatient():void {
+    createNewPatient(): void {
         this.selectedPatient = new Patient();
-        this.selectedRow = -1;
+        this.selectedPatientId = -1;
     }
 
 }

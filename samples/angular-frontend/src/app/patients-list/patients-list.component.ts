@@ -20,11 +20,11 @@ export class PatientsListComponent implements OnInit {
     @Output("onSelect")onSelect = new EventEmitter();
     @Output("createNewPatient")createNewPatient = new EventEmitter();
     @Input() searchInput: string;
-    @Input() row: number;
+    @Input() selectedId: number;
+
     constructor(private patientService: PatientService, private store: Store<AppState>) {
         this.patients = store.pipe(select("patient"));
     }
-
 
     ngOnInit() {
         this.getPatients();
@@ -35,9 +35,8 @@ export class PatientsListComponent implements OnInit {
     }
 
 
-
-    onClick(patient: Patient, idx): void {
-        this.onSelect.emit({ patient, idx });
+    onClick(patient: Patient): void {
+        this.onSelect.emit(patient);
     }
 
     newPatientForm(): void {
