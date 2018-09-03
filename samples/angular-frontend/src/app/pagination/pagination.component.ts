@@ -39,7 +39,7 @@ export class PaginationComponent implements OnInit {
     }
 
     setPage(page): void {
-        this.patientService.getPatients('', page);
+        this.patientService.getPatients('', page + 1);
         this.currentPage = page;
     }
 }
