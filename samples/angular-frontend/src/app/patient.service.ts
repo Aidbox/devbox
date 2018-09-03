@@ -5,10 +5,11 @@ import { Observable, of } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState } from './reducer';
-import { LOADING, RECEIVE, APPEND, DELETE, UPDATE } from './reducer/patient';
+import { LOADING, RECEIVE, APPEND, DELETE, UPDATE, SET, INC, DEC } from './reducer/patient';
 
 import { Patient } from './patient';
 import { objectToFhir, fhirToObject } from './patient.converter';
+import { enviroment } from '../../enviroment';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -19,7 +20,7 @@ const httpOptions = {
 })
 export class PatientService {
 
-    baseURL:string = "http://localhost:7777";
+    baseURL:string = enviroment.AIDBOX_URL;
 
     constructor(
         private http: HttpClient,
@@ -27,14 +28,19 @@ export class PatientService {
     ) { }
 
     getPatients(patientName = '', page = 0): void {
-        let url = `${this.baseURL}/fhir/Patient?_page=${page}&_totalMethod=count`;
+        // TODO page var
+        let url = `${this.baseURL}/fhir/Patient?_page=0&_totalMethod=count`;
         this.store.dispatch({ type: LOADING });
         if (patientName && patientName.length >= 0) {
             url += `&name=${patientName}`;
         }
         this.http.get(url).subscribe(patients  => {
             console.log('patients', patients);
-            this.store.dispatch({ type: RECEIVE, data: patients["entry"].map(p => fhirToObject(p.resource))})
+            const l = 10;
+            // this.store.dispatch({ type: RECEIVE, data: patients["entry"].map(p => fhirToObject(p.resource))});
+            this.store.dispatch({ type: RECEIVE, data: patients["entry"].slice(l * page, l * page + l).map(p => fhirToObject(p.resource))});
+            this.store.dispatch({ type: SET, count: patients["total"], selectedPage: page });
+
         });
     }
 
@@ -44,7 +50,8 @@ export class PatientService {
         this.http.post(url, patientData, httpOptions)
             .subscribe(p => {
                 patient.id = p["id"];
-                this.store.dispatch({ type: APPEND, data: [patient] })
+                this.store.dispatch({ type: APPEND, data: [patient] });
+                this.store.dispatch({ type: INC });
             });
     };
 
@@ -53,6 +60,7 @@ export class PatientService {
         this.http.delete(url, httpOptions)
             .subscribe(p => {
                 this.store.dispatch({ type: DELETE, data: [patient] });
+                this.store.dispatch({ type: DEC  });
             });
     }
 

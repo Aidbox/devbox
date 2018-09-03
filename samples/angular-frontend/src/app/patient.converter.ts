@@ -1,7 +1,6 @@
 import { Patient } from './patient';
 
 export const  objectToFhir = (obj): Object => {
-    console.log(obj, 'pat obj');
     const patientData: any = {
         resourceType: "Patient",
         name: [
@@ -30,7 +29,6 @@ export const  objectToFhir = (obj): Object => {
     if (obj.gender) {
         patientData.gender = obj.gender;
     }
-    console.log("Patient data", patientData);
     return patientData;
 }
 
@@ -59,7 +57,6 @@ export const fhirToObject = (obj): Patient => {
         emails: emails.length > 0 ? emails : [{ value: '', system: 'email'}],
         phones: phones.length > 0 ? phones : [{ value: '', system: 'phone'}]
     };
-    console.log('fhirOBJ', patient);
     return  patient;
 }
 
