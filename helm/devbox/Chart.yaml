@@ -1,4 +1,4 @@
 apiVersion: v1
 description: Devbox chart
 name: devbox
-version: 0.0.2
+version: 0.1.3

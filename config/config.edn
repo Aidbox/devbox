@@ -1,8 +1,5 @@
-{
- :config {
-          ;; :_totalMethod :count
+{:config {:logLevel :info      ;; One of -  :trace :debug :info :warn :error :fatal
+          :_totalMethod :count ;; Default - :count , nil for desable counting
           }
- :import {
-          ;; :icd-10 {}
-          }
-}
+ :import {;; :icd-10 {}
+          }}
