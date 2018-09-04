@@ -38,4 +38,5 @@ export class PaginationComponent {
     this.patientService.getPatients('', page + 1);
     this.currentPage = page;
   }
+
 }

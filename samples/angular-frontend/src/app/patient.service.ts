@@ -47,6 +47,7 @@ export class PatientService {
   addPatient(patient: Patient): void {
     const url = `${this.baseURL}/fhir/Patient`;
     const patientData = objectToFhir(patient);
+    this.store.dispatch({ type: LOADING });
     this.http.post(url, patientData, httpOptions)
       .subscribe(p => {
         patient.id = p["id"];
@@ -56,6 +57,7 @@ export class PatientService {
 
   deletePatient(patient: Patient): void {
     const url = `${this.baseURL}/fhir/Patient/${patient.id}`;
+    this.store.dispatch({ type: LOADING });
     this.http.delete(url, httpOptions)
       .subscribe(p => {
         this.store.dispatch({ type: DELETE, data: [patient] });
@@ -65,6 +67,7 @@ export class PatientService {
   updatePatient(patient: Patient): void {
     const url = `${this.baseURL}/fhir/Patient/${patient.id}`;
     const patientData = objectToFhir(patient);
+    this.store.dispatch({ type: LOADING });
     this.http.put(url, patientData, httpOptions)
       .subscribe(p => {
         this.store.dispatch({ type: UPDATE, data: [patient]});
