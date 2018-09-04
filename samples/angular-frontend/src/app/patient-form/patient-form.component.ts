@@ -44,6 +44,7 @@ export class PatientFormComponent {
 
   updatePatient(): void {
     this.patientService.updatePatient(this.patient)
+    console.log(this.patient);
   }
 
   getNameForPhone(idx: number): string {
