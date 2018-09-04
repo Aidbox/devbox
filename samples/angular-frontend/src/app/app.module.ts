@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 
-import { patientReducer, patientsCountReducer } from './reducer/patient';
+import { patientReducer } from './reducer/patient';
 
 import { AppComponent } from './app.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
@@ -24,7 +24,7 @@ import { PaginationComponent } from './pagination/pagination.component';
       FormsModule,
       ReactiveFormsModule,
       HttpClientModule,
-      StoreModule.forRoot({ patient: patientReducer, counter: patientsCountReducer })
+      StoreModule.forRoot({ patient: patientReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]

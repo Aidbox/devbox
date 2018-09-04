@@ -29,10 +29,6 @@ export interface PatientState {
 export interface PatientAction {
     type: string;
     data: Patient[];
-}
-
-export interface PatientsCountAction {
-    type: string;
     count: number;
     selectedPage: number;
 }
@@ -43,34 +39,34 @@ export function patientReducer(state: PatientState = initialState, action: Patie
             return { ...state, loading: true };
 
         case RECEIVE:
-            return { ...state, loading: false, data: action.data };
+            return {
+                ...state,
+                loading: false,
+                data: action.data,
+                count: action.count,
+                selectedPage: action.selectedPage
+            };
 
         case APPEND:
-            return { ...state, loading: false, data: [ ...state.data, ...action.data ]};
+            return {
+                ...state,
+                loading: false,
+                data: [ ...state.data, ...action.data ],
+                count: state.count += 1
+            };
 
         case DELETE:
             const [deletedPatient] = action.data;
-            return { ...state, loading: false, data: state.data.filter(p => p.id !== deletedPatient.id) };
+            return {
+                ...state,
+                loading: false,
+                data: state.data.filter(p => p.id !== deletedPatient.id),
+                count: state.count -= 1
+            };
 
         case UPDATE:
             const [updatedPatient] = action.data;
             return { ...state, loading: false, data: state.data.map(patient => patient.id === updatedPatient.id ? updatedPatient : patient ) };
-
-        default:
-            return state;
-    }
-}
-
-export function patientsCountReducer(state: PatientState = initialState, action: PatientsCountAction) {
-    switch (action.type) {
-        case SET:
-            return { ...state, count: action.count, selectedPage: action.selectedPage };
-
-        case INC:
-            return { ...state, count: state.count += 1 };
-
-        case DEC:
-            return { ...state, count: state.count -= 1 };
 
         default:
             return state;
