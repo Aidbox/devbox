@@ -16,34 +16,34 @@ import { PatientState } from '../reducer/patient';
 })
 export class PatientsListComponent implements OnInit {
 
-    patients: Observable<PatientState>;
-    @Output("onSelect")onSelect = new EventEmitter();
-    @Output("createNewPatient")createNewPatient = new EventEmitter();
-    @Input() searchInput: string;
-    @Input() selectedId: number;
+  patients: Observable<PatientState>;
+  @Output("onSelect")onSelect = new EventEmitter();
+  @Output("createNewPatient")createNewPatient = new EventEmitter();
+  @Input() searchInput: string;
+  @Input() selectedId: number;
 
-    constructor(private patientService: PatientService, private store: Store<AppState>) {
-        this.patients = store.pipe(select("patient"));
-    }
+  constructor(private patientService: PatientService, private store: Store<AppState>) {
+    this.patients = store.pipe(select("patient"));
+  }
 
-    ngOnInit() {
-        this.getPatients();
-    }
+  ngOnInit() {
+    this.getPatients();
+  }
 
-    getPatients(): void {
-        this.patientService.getPatients();
-    }
+  getPatients(): void {
+    this.patientService.getPatients();
+  }
 
 
-    onClick(patient: Patient): void {
-        this.onSelect.emit(patient);
-    }
+  onClick(patient: Patient): void {
+    this.onSelect.emit(patient);
+  }
 
-    newPatientForm(): void {
-        this.createNewPatient.emit();
-    }
+  newPatientForm(): void {
+    this.createNewPatient.emit();
+  }
 
-    searchPatients(): void {
-        this.patientService.getPatients(this.searchInput);
-    }
+  searchPatients(): void {
+    this.patientService.getPatients(this.searchInput);
+  }
 }

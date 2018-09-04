@@ -20,11 +20,11 @@ import { PaginationComponent } from './pagination/pagination.component';
     PaginationComponent
   ],
   imports: [
-      BrowserModule,
-      FormsModule,
-      ReactiveFormsModule,
-      HttpClientModule,
-      StoreModule.forRoot({ patient: patientReducer })
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    StoreModule.forRoot({ patient: patientReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]
