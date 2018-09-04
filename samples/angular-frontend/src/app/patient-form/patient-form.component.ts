@@ -10,58 +10,55 @@ import { FormGroup, FormControl } from '@angular/forms';
   templateUrl: './patient-form.component.html',
   styleUrls: ['./patient-form.component.css']
 })
-export class PatientFormComponent implements OnInit {
+export class PatientFormComponent {
 
-    @Input() patient: Patient;
-    @Output("createNewPatient")createNewPatient = new EventEmitter();
-    constructor(private patientService: PatientService) { }
+  @Input() patient: Patient;
+  @Output("createNewPatient")createNewPatient = new EventEmitter();
+  constructor(private patientService: PatientService) { }
 
-    ngOnInit() {
+
+  getPatients(): void {
+    this.patientService.getPatients();
+  }
+
+  addPatient(): void {
+    this.patientService.addPatient(this.patient);
+  }
+
+  onSubmit(form): void {
+    if (form.valid) {
+      this.addPatient();
+    } else {
+      Object.keys(form.controls).forEach(field => {
+        form.controls[field].markAsTouched(true);
+      });
     }
-
-    getPatients(): void {
-        this.patientService.getPatients();
-    }
-
-    addPatient(): void {
-        this.patientService.addPatient(this.patient);
-    }
-
-    onSubmit(form): void {
-        if (form.valid) {
-            this.addPatient();
-        } else {
-            Object.keys(form.controls).forEach(field => {
-                form.controls[field].markAsTouched(true);
-            });
-        }
-    }
+  }
 
 
 
-    deletePatient(): void {
-        this.patientService.deletePatient(this.patient);
-        // TODO its ok?
-        this.createNewPatient.emit();
-    }
+  deletePatient(): void {
+    this.patientService.deletePatient(this.patient);
+    this.createNewPatient.emit();
+  }
 
-    updatePatient(): void {
-        this.patientService.updatePatient(this.patient)
-    }
+  updatePatient(): void {
+    this.patientService.updatePatient(this.patient)
+  }
 
-    getNameForPhone(idx: number): string {
-        return `phoneName-${idx}`;
-    }
+  getNameForPhone(idx: number): string {
+    return `phoneName-${idx}`;
+  }
 
-    getNameForEmail(idx: number): string {
-        return `emailName-${idx}`;
-    }
+  getNameForEmail(idx: number): string {
+    return `emailName-${idx}`;
+  }
 
-    addEmailField(emails): void {
-        emails.push({ system: "email" });
-    }
+  addEmailField(): void {
+    this.patient.telecom.emails.push({ system: "email" });
+  }
 
-    addPhoneField(phones): void {
-        phones.push({ system: "phone" });
-    }
+  addPhoneField(): void {
+    this.patient.telecom.phones.push({ system: "phone" });
+  }
 }
