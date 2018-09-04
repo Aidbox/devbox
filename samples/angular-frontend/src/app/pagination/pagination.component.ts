@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PatientState } from '../reducer/patient';
 
@@ -14,18 +14,14 @@ import { SET } from '../reducer/patient';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent {
 
     patients: Observable<PatientState>;
     currentPage: number;
 
     constructor(public patientService: PatientService, private store: Store<AppState>) {
-        this.patients = store.pipe(select("counter"));
+        this.patients = store.pipe(select("patient"));
         this.currentPage = 0;
-    }
-
-    ngOnInit() {
-        // this.patientService.getPatients();
     }
 
     getPagesCount(patientsCount: number): number {

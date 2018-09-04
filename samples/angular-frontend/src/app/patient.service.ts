@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState } from './reducer';
-import { LOADING, RECEIVE, APPEND, DELETE, UPDATE, SET, INC, DEC } from './reducer/patient';
+import { LOADING, RECEIVE, APPEND, DELETE, UPDATE } from './reducer/patient';
 
 import { Patient } from './patient';
 import { objectToFhir, fhirToObject } from './patient.converter';
@@ -36,10 +36,12 @@ export class PatientService {
         this.http.get(url).subscribe(patients  => {
             console.log('patients', patients);
             // const l = 10;
-            this.store.dispatch({ type: RECEIVE, data: patients["entry"].map(p => fhirToObject(p.resource))});
-            // this.store.dispatch({ type: RECEIVE, data: patients["entry"].slice(l * page, l * page + l).map(p => fhirToObject(p.resource))});
-            this.store.dispatch({ type: SET, count: patients["total"], selectedPage: page });
-
+          this.store.dispatch({
+            type: RECEIVE,
+            data: patients["entry"].map(p => fhirToObject(p.resource)),
+            count: patients["total"],
+            selectedPage: page
+          });
         });
     }
 
@@ -50,7 +52,6 @@ export class PatientService {
             .subscribe(p => {
                 patient.id = p["id"];
                 this.store.dispatch({ type: APPEND, data: [patient] });
-                this.store.dispatch({ type: INC });
             });
     };
 
@@ -59,7 +60,6 @@ export class PatientService {
         this.http.delete(url, httpOptions)
             .subscribe(p => {
                 this.store.dispatch({ type: DELETE, data: [patient] });
-                this.store.dispatch({ type: DEC  });
             });
     }
 
