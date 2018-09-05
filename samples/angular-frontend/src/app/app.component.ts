@@ -13,17 +13,5 @@ import { AppState } from './reducer';
 })
 export class AppComponent {
   title = 'angular-frontend';
-  selectedPatient: Patient = new Patient();
-  selectedPatientId: number;
-
-  onSelect(patient): void {
-    this.selectedPatient = patient;
-    this.selectedPatientId = patient.id;
-  }
-
-  createNewPatient(): void {
-    this.selectedPatient = new Patient();
-    this.selectedPatientId = -1;
-  }
 
 }
