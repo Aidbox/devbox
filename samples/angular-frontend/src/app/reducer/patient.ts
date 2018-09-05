@@ -7,16 +7,14 @@ export const LOADING = 'Patient/loading';
 export const APPEND = 'Patient/append';
 export const DELETE = 'Patient/delete';
 export const UPDATE = 'Patient/update';
-
-export const SET = 'Patient/set';
-export const INC = 'Patient/inc';
-export const DEC = 'Patient/dec';
+export const SELECT_PATIENT = 'Patient/selectPatient';
 
 const initialState = {
   loading: false,
   data: [],
   count: 0,
-  selectedPage: 0
+  selectedPage: 1,
+  selectedPatientId: 0
 };
 
 export interface PatientState {
@@ -24,6 +22,7 @@ export interface PatientState {
   data: Patient[];
   count: number;
   selectedPage: number;
+  selectedPatientId: number;
 }
 
 export interface PatientAction {
@@ -31,12 +30,16 @@ export interface PatientAction {
   data: Patient[];
   count: number;
   selectedPage: number;
+  selectedPatientId: number;
 }
 
 export function patientReducer(state: PatientState = initialState, action: PatientAction) {
   switch (action.type) {
     case LOADING:
       return { ...state, loading: true };
+
+    case SELECT_PATIENT:
+      return { ...state, loading: false, selectedPatientId: action.selectedPatientId };
 
     case RECEIVE:
       return {

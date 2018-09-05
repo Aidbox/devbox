@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Patients list</h2>
-  <div *ngIf="(patients | async)?.loading">Loading...</div>
+  <div *ngIf="loading">Loading...</div>
   <div class="input-group mb-3">
     <input type="text" class="form-control"
       [(ngModel)]="searchInput"
@@ -13,7 +13,15 @@
     <button class="btn btn-primary" (click)="newPatientForm()">New patient</button>
   </div>
   <div class="list-group">
-    <a (click)="onClick(patient)" href="#" [class.active]="patient.id === selectedId" *ngFor="let patient of (patients | async)?.data;" class="list-group-item list-group-item-action">{{ patient.lastName +" " + patient.firstName }}</a>
-
+    <a (click)="onClick(patient)"
+      href="#"
+      [class.active]="patient.id === selectedPatientId"
+      *ngFor="let patient of data"
+      class="list-group-item list-group-item-action">
+      {{ patient.lastName + " " + patient.firstName }}
+    </a>
+  </div>
+  <div *ngIf="data.length > 0">
+    <app-pagination></app-pagination>
   </div>
 </div>

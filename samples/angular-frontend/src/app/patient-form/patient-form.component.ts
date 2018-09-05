@@ -3,7 +3,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Patient } from '../patient';
 import { PatientService } from '../patient.service';
 
+import { AppState } from '../reducer';
+
+import { select, Store } from '@ngrx/store';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+
+import { PatientState } from '../reducer/patient';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-patient-form',
@@ -12,10 +19,23 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class PatientFormComponent {
 
-  @Input() patient: Patient;
-  @Output("createNewPatient")createNewPatient = new EventEmitter();
-  constructor(private patientService: PatientService) { }
-
+  patients: Observable<PatientState>;
+  patient: Patient;
+  loading: boolean;
+  constructor(private patientService: PatientService, private store: Store<AppState>) {
+    this.patients = store.pipe(select("patient"));
+    this.patients.subscribe(patients => {
+      this.loading = patients.loading;
+      if (patients.selectedPatientId === 0) {
+        this.patient = new Patient();
+      } else {
+        const selectedPatient = _.find(patients.data, ['id', patients.selectedPatientId]);
+        if (selectedPatient) {
+          this.patient = selectedPatient;
+        }
+      }
+    });
+  }
 
   getPatients(): void {
     this.patientService.getPatients();
@@ -28,23 +48,32 @@ export class PatientFormComponent {
   onSubmit(form): void {
     if (form.valid) {
       this.addPatient();
+      this.setUntouchedForm(form);
     } else {
-      Object.keys(form.controls).forEach(field => {
-        form.controls[field].markAsTouched(true);
-      });
+      this.setTouchedForm(form)
     }
   }
 
-
-
   deletePatient(): void {
     this.patientService.deletePatient(this.patient);
-    this.createNewPatient.emit();
+    this.patient = new Patient();
   }
+
 
   updatePatient(): void {
     this.patientService.updatePatient(this.patient)
-    console.log(this.patient);
+  }
+
+  setTouchedForm(form) {
+    Object.keys(form.controls).forEach(field => {
+      form.controls[field].markAsTouched(true);
+    });
+  }
+
+  setUntouchedForm(form) {
+    Object.keys(form.controls).forEach(field => {
+      form.controls[field].markAsUntouched(true);
+    });
   }
 
   getNameForPhone(idx: number): string {

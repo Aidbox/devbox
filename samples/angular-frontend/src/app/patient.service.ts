@@ -5,7 +5,8 @@ import { Observable, of } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState } from './reducer';
-import { LOADING, RECEIVE, APPEND, DELETE, UPDATE } from './reducer/patient';
+import { LOADING, RECEIVE, APPEND, DELETE, UPDATE,
+         SELECT_PATIENT } from './reducer/patient';
 
 import { Patient } from './patient';
 import { objectToFhir, fhirToObject } from './patient.converter';
@@ -14,6 +15,10 @@ import { enviroment } from '../../enviroment';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json'})
 };
+
+
+export const defaultCount: number = 10;
+
 
 @Injectable({
   providedIn: 'root'
@@ -27,14 +32,13 @@ export class PatientService {
     private store: Store<AppState>
   ) { }
 
-  getPatients(patientName = '', page = 1, count = 10): void {
+  getPatients(patientName = '', page = 1, count = defaultCount): void {
     let url = `${this.baseURL}/fhir/Patient?_page=${page}&_count=${count}`;
     this.store.dispatch({ type: LOADING });
     if (patientName && patientName.length >= 0) {
       url += `&name=${patientName}`;
     }
     this.http.get(url).subscribe(patients  => {
-      console.log('patients', patients);
       this.store.dispatch({
         type: RECEIVE,
         data: patients["entry"].map(p => fhirToObject(p.resource)),
@@ -52,6 +56,7 @@ export class PatientService {
       .subscribe(p => {
         patient.id = p["id"];
         this.store.dispatch({ type: APPEND, data: [patient] });
+        this.store.dispatch({ type: SELECT_PATIENT, selectedPatientId: patient.id })
       });
   };
 
@@ -73,4 +78,9 @@ export class PatientService {
         this.store.dispatch({ type: UPDATE, data: [patient]});
       });
   }
+
+  selectPatient(id: number): void {
+    this.store.dispatch({ type: SELECT_PATIENT, selectedPatientId: id });
+  }
+
 }

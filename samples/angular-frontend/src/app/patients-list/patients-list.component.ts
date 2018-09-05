@@ -17,13 +17,19 @@ import { PatientState } from '../reducer/patient';
 export class PatientsListComponent implements OnInit {
 
   patients: Observable<PatientState>;
-  @Output("onSelect")onSelect = new EventEmitter();
-  @Output("createNewPatient")createNewPatient = new EventEmitter();
+  loading: boolean;
+  selectedPatientId: number;
+  data: Patient[];
+
   @Input() searchInput: string;
-  @Input() selectedId: number;
 
   constructor(private patientService: PatientService, private store: Store<AppState>) {
     this.patients = store.pipe(select("patient"));
+    this.patients.subscribe(patients => {
+      this.loading = patients.loading;
+      this.selectedPatientId = patients.selectedPatientId;
+      this.data = patients.data;
+    });
   }
 
   ngOnInit() {
@@ -36,11 +42,11 @@ export class PatientsListComponent implements OnInit {
 
 
   onClick(patient: Patient): void {
-    this.onSelect.emit(patient);
+    this.patientService.selectPatient(patient.id);
   }
 
   newPatientForm(): void {
-    this.createNewPatient.emit();
+    this.patientService.selectPatient(0);
   }
 
   searchPatients(): void {
