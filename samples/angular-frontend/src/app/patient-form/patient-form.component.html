@@ -1,0 +1,157 @@
+<div class="container">
+  <h2>Patient info</h2>
+  <form id="patientForm" #patientForm="ngForm" (ngSubmit)="onSubmit(patientForm)">
+    <div class="form-group">
+      <label for="firstName">First name *</label>
+      <input type="text" [readonly]="loading" class="form-control" id="firstName" name="firstName"
+        [(ngModel)]="patient.firstName"
+        #firstName="ngModel" required>
+      <div *ngIf="firstName.touched && !firstName.valid"
+        class="alert">
+        First name is required
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="lastName">Last name *</label>
+      <input type="text" [readonly]="loading" class="form-control" id="lastName" required
+        [(ngModel)]="patient.lastName" name="lastName"
+        #lastName="ngModel">
+      <div *ngIf="lastName.touched && !lastName.valid"
+        class="alert">
+        Last name is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <select class="form-control" name="gender" form="patientForm"
+        [(ngModel)]="patient.gender"
+        #gender="ngModel">
+        <option value="">-</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="birthDate">Birth date</label>
+      <input type="text" class="form-control" id="birthDate" [readonly]="loading"
+        [(ngModel)]="patient.birthDate" name="birthDate"
+        #birthDate="ngModel"
+        pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])">
+      <div *ngIf="birthDate.touched && !birthDate.valid"
+        class="alert">
+        Supported date format: 'YYYY-MM-DD'
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="street">Street, home *</label>
+      <input type="text" class="form-control" id="street" [readonly]="loading"
+        [(ngModel)]="patient.street" name="street"
+        #street="ngModel"
+        required>
+      <div *ngIf="street.touched && !street.valid"
+        class="alert"
+        required>
+        Street is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="state">State *</label>
+      <input type="text" class="form-control" id="state" [readonly]="loading"
+        [(ngModel)]="patient.state" name="state"
+        #state="ngModel"
+        required>
+      <div *ngIf="state.touched && !state.valid"
+        class="alert">
+        State is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="city">City *</label>
+      <input type="text" class="form-control" id="city" [readonly]="loading"
+        [(ngModel)]="patient.city" name="city"
+        #city="ngModel"
+        required>
+      <div *ngIf="city.touched && !city.valid"
+        class="alert">
+        City is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="zcode">Postal code</label>
+      <input type="text" class="form-control" id="zcode" [readonly]="loading"
+        [(ngModel)]="patient.zcode" name="zcode"
+        #zcode="ngModel"
+        pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$">
+      <div *ngIf="zcode.touched && !zcode.valid"
+        class="alert">
+        Wrong postal code
+      </div>
+    </div>
+
+    <label>Phones</label>
+    <div>
+      <div *ngFor="let phone of patient.telecom.phones;  let i = index">
+        <div class="form-group">
+          <input type="text" class="form-control" [id]="getNameForPhone(i)"
+            [readonly]="loading"
+            [(ngModel)]="patient.telecom.phones[i].value"
+            #phone="ngModel"
+            [name]="getNameForPhone(i)"
+            pattern="^[0-9]*$"
+          >
+          <div *ngIf="phone.touched && !phone.valid"
+            class="alert">
+            Only numbers required
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-sm bottom"
+        [disabled]="loading"
+        type="button" (click)="addPhoneField()">add</button>
+    </div>
+
+    <label>Emails</label>
+    <div>
+      <div *ngFor="let phone of patient.telecom.emails;  let i = index">
+        <div class="form-group">
+          <input type="text" class="form-control" [id]="getNameForEmail(i)"
+            [readonly]="loading"
+            [(ngModel)]="patient.telecom.emails[i].value"
+            #email="ngModel"
+            [name]="getNameForEmail(i)"
+            pattern=".+\@.+\..+"
+          >
+          <div *ngIf="email.touched && !email.valid"
+            class="alert">
+            Wrong email format
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-sm bottom"
+        [disabled]="loading"
+        type="button" (click)="addEmailField()">add</button>
+    </div>
+
+    <div>
+      <div *ngIf="patient.id; then oldPatient else newPatient">
+      </div>
+      <ng-template #oldPatient>
+        <div>
+          <button type="button" [disabled]="loading" class="btn btn-info bottom" (click)="updatePatient()">Update</button>
+          <button type="button" [disabled]="loading" class="btn btn-danger bottom" (click)="deletePatient()">Delete</button>
+        </div>
+      </ng-template>
+      <ng-template #newPatient>
+        <button type="submit" [disabled]="loading" class="btn btn-success bottom">Submit</button>
+      </ng-template>
+    </div>
+  </form>
+</div>

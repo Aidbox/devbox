@@ -1,0 +1,27 @@
+<div class="container">
+  <h2>Patients list</h2>
+  <div *ngIf="loading">Loading...</div>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control"
+      [(ngModel)]="searchInput"
+      placeholder="Search..." aria-label="Patient name" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" (click)="searchPatients()">Find</button>
+    </div>
+  </div>
+  <div class="input-group mb-3">
+    <button class="btn btn-primary" (click)="newPatientForm()">New patient</button>
+  </div>
+  <div class="list-group">
+    <a (click)="onClick(patient)"
+      href="#"
+      [class.active]="patient.id === selectedPatientId"
+      *ngFor="let patient of data"
+      class="list-group-item list-group-item-action">
+      {{ patient.lastName + " " + patient.firstName }}
+    </a>
+  </div>
+  <div *ngIf="data.length > 0">
+    <app-pagination></app-pagination>
+  </div>
+</div>
