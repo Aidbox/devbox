@@ -6,6 +6,8 @@ image:
 
 ingress:
   enabled: false
+  # hosts:
+  #   - host: devbox.example
   annotations:
     ingress.kubernetes.io/client-max-body-size: 64m
     ingress.kubernetes.io/proxy-body-size: 64m
@@ -15,14 +17,26 @@ ingress:
 
 config: >-
   {:config {}}
+
 service:
   type: ClusterIP
   externalPort: 80
   internalPort: 8080
 
 aidboxdb:
-  database: devbox 
+  database: devbox
   user: postgres
   password: postgres
   persistence:
+    # by default DB won't stored
     enabled: false
+
+    # If persistence is enaled - by default Persistent Volume Claim will be used
+    # type: pvc
+    # size: 20Gi
+    # annotations:
+    #   volume.beta.kubernetes.io/storage-class: standard
+    #   volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/gce-pd
+
+    # Database will be stored on host machine
+    # type: node

@@ -1,5 +1,7 @@
 {:config {:logLevel :info      ;; One of -  :trace :debug :info :warn :error :fatal
-          :_totalMethod :count ;; Default - :count , nil for desable counting
+          :_totalMethod :count ;; Default - :count , nil for disable counting
           }
- :import {;; :icd-10 {}
+ :import {;; Different modules can be used.
+          ;; Usually module enabe terminology.
+          ;; :icd-10 {}
           }}
