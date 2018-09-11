@@ -10,7 +10,7 @@ services:
       - "${DEVBOX_PORT:-8888}:8888"
     volumes:
       - ./config:/var/config
-      - ./pgdata:/var/static
+      - ./static:/var/static
     environment:
       FILE_ROOT:     /var/static
       AIDBOX_CONFIG: /var/config/config.edn
