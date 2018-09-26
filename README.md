@@ -24,7 +24,7 @@ we'll use it to start/stop devbox.
 
 ## License keys
 
-Visit and obtain license key on (License Server)[http://license-ui.aidbox.app].
+Visit and obtain license key on [License Server](http://license-ui.aidbox.app).
 After that enter your license id and key into license.env file
 
 ```
