@@ -22,16 +22,15 @@ shows that no containers are currently running:
 Make sure that `docker-compose` command is available as well, because
 we'll use it to start/stop devbox.
 
-Last step is `docker login` command. You need to provide your
-DockerHub's credentials to your local docker daemon so it will
-identify you when it will pull devbox's images. We need this step
-because devbox images are private, not public. Most likely you'll need
-to invoke `docker login` command only once, and Docker will store you
-credentials in your home folder.
+## License keys
 
-    $ docker login
-    Username: your-dockerhub-username
-    Password: xxxxxxx
+Visit and obtain license key on (License Server)[http://license-ui.aidbox.app].
+After that enter your license id and key into license.env file
+
+```
+DEVBOX_LICENSE_ID=<license id>
+DEVBOX_LICENSE_KEY=<license key>
+```
 
 ## Running devbox with docker-compose
 
