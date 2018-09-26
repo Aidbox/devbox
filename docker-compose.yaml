@@ -1,20 +1,22 @@
 version: '3.1'
 services:
   devbox:
-    image: "aidbox/devbox:0.1.3"
+    image: "healthsamurai/devbox:0.2.0-14-g5745a45"
     depends_on:
       - "devbox-db"
     links:
       - "devbox-db:database"
     ports:
-      - "${DEVBOX_PORT:-8888}:8888"
+      - "${DEVBOX_PORT:-8888}:${DEVBOX_PORT:-8888}"
     volumes:
       - ./config:/var/config
       - ./static:/var/static
+    env_file:
+      - license.env
     environment:
       FILE_ROOT:     /var/static
       AIDBOX_CONFIG: /var/config/config.edn
-      PORT:          8888
+      PORT:          "${DEVBOX_PORT:-8888}"
       PGHOST:        database
       PGPORT:        5432
       PGUSER:        postgres
