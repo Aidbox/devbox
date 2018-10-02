@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   devbox:
-    image: "healthsamurai/devbox:0.2.0-14-g5745a45"
+    image: "healthsamurai/devbox:0.2.1"
     depends_on:
       - "devbox-db"
     links:
