@@ -15,7 +15,7 @@ services:
       - license.env
     environment:
       FILE_ROOT:     /var/static
-      #DEVBOX_PASSOWRD: "${DEVBOX_PASSOWRD:-secret}"
+      #DEVBOX_PASSWORD: "${DEVBOX_PASSWORD:-secret}"
       AIDBOX_CONFIG: /var/config/config.edn
       PORT:          "${DEVBOX_PORT:-8888}"
       PGHOST:        database
