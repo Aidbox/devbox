@@ -1,33 +1,24 @@
 version: '3.1'
 services:
   devbox:
-    image: "healthsamurai/devbox:0.3.1"
+    image: "${AIDBOX_IMAGE}"
     depends_on:
       - "devbox-db"
     links:
       - "devbox-db:database"
     ports:
-      - "${DEVBOX_PORT:-8888}:${DEVBOX_PORT:-8888}"
-    volumes:
-      - ./config:/var/config
-      - ./static:/var/static
+      - "${AIDBOX_PORT}:${AIDBOX_PORT}"
     env_file:
-      - license.env
+      - .env
     environment:
-      FILE_ROOT:     /var/static
-      #DEVBOX_PASSWORD: "${DEVBOX_PASSWORD:-secret}"
-      AIDBOX_CONFIG: /var/config/config.edn
-      PORT:          "${DEVBOX_PORT:-8888}"
-      PGHOST:        database
-      PGPORT:        5432
-      PGUSER:        postgres
-      PGPASSWORD:    postgres
-      PGDATABASE:    devbox
+      PGHOST: database
   devbox-db:
-    image: "aidbox/aidboxdb:0.0.1-alpha3"
+    image: "${PGIMAGE}"
+    ports:
+      - "${PGPORT}:${PGHOSTPORT}"
     volumes:
     - "./pgdata:/data"
     environment:
-      POSTGRES_USER:     postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB:       devbox
+      POSTGRES_USER:     "${PGUSER}"
+      POSTGRES_PASSWORD: "${PGPASSWORD}"
+      POSTGRES_DB:       "${PGDATABASE}"
