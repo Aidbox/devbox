@@ -1,3 +1,4 @@
 pgdata
 static
 node_modules
+.env
