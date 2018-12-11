@@ -1,0 +1,33 @@
+version: '3.1'
+services:
+  new-devbox-db:
+    image: "${PG_IMAGE}"
+    volumes:
+      - "${PG_DATA}:/data"
+    ports:
+      - "${DB_HOST_PORT}:${DB_CONTAINER_PORT}"
+    environment:
+      POSTGRES_USER:     "${PGUSER}"
+      POSTGRES_PASSWORD: "${PGPASSWORD}"
+      POSTGRES_DB:       "${PGDATABASE}"
+
+  upgrade-devbox:
+    image: "${PG_IMAGE}"
+    depends_on:
+      - "old-devbox-db"
+      - "new-devbox-db"
+    volumes:
+      - "./backup:/backup"
+    environment:
+      PGUSER:     "${PGUSER}"
+      PGPASSWORD: "${PGPASSWORD}"
+      PGDATABASE: "${PGDATABASE}"
+
+  old-devbox-db:
+    image: "${PG_OLD_IMAGE}"
+    volumes:
+      - "${PG_OLD_DATA}:/data"
+    environment:
+      POSTGRES_USER:     "${PGUSER}"
+      POSTGRES_PASSWORD: "${PGPASSWORD}"
+      POSTGRES_DB:       "${PGDATABASE}"

@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  devbox:
+    image: "${AIDBOX_IMAGE}"
+    depends_on:
+      - "devbox-db"
+    ports:
+      - "${AIDBOX_PORT}:${AIDBOX_PORT}"
+    environment:
+      PGHOST: devbox-db
+      PGPORT: 5432
+      PGUSER: ${PGUSER}
+      PGPASSWORD: ${PGPASSWORD}
+      PGDATABASE: ${PGDATABASE}
+      AIDBOX_FHIR_VERSION: ${AIDBOX_FHIR_VERSION}
+      AIDBOX_LICENSE_ID: ${AIDBOX_LICENSE_ID}
+      AIDBOX_LICENSE_KEY: ${AIDBOX_LICENSE_KEY}
+      AIDBOX_CLIENT_ID: ${AIDBOX_CLIENT_ID}
+      AIDBOX_CLIENT_SECRET: ${AIDBOX_CLIENT_SECRET}
+  devbox-db:
+    image: "${PG_IMAGE}"
+    ports:
+      - "${DB_HOST_PORT}:${DB_CONTAINER_PORT}"
+    volumes:
+      - "${PG_DATA}:/data"
+    environment:
+      POSTGRES_USER:     "${PGUSER}"
+      POSTGRES_PASSWORD: "${PGPASSWORD}"
+      POSTGRES_DB:       "${PGDATABASE}"
