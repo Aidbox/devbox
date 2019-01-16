@@ -1,4 +1,0 @@
-dependencies:
-- name: aidboxdb
-  version: 0.0.1
-  repository: "file://./charts/aidboxdb"

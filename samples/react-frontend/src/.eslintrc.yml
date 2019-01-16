@@ -1,9 +1,0 @@
-extends:
-  - plugin:import/errors
-settings:
-  import/resolver: webpack
-rules:
-  node/no-unsupported-features: 0
-env:
-  node: true # webpack
-  browser: true
