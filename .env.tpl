@@ -15,7 +15,7 @@ PGUSER=postgres
 PGPASSWORD=postgres
 PGDATABASE=devbox
 
-PGIMAGE=aidbox/aidboxdb:0.0.1-alpha6
+PGIMAGE=aidbox/db:11.1.0
 
 
 AIDBOX_IMAGE=healthsamurai/devbox:latest
