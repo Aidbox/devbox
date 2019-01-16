@@ -1,4 +1,4 @@
-# Aidbox Developer Version (aka devbox)
+# Aidbox.Dev - Aidbox Developer Version (aka devbox)
 
 This repository contains auxiliary files to help you quickly run
 devbox on your local workstation and start crafting your first FHIR
