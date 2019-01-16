@@ -12,10 +12,13 @@ services:
       - .env
     environment:
       PGHOST: database
+      AIDBOX_CONFIG: /var/config/config.edn
+    volumes:
+      - ./config:/var/config
   devbox-db:
     image: "${PGIMAGE}"
     ports:
-      - "${PGPORT}:${PGHOSTPORT}"
+      - "${PGHOSTPORT}:${PGPORT}"
     volumes:
     - "./pgdata:/data"
     environment:
