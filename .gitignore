@@ -1,4 +1,6 @@
 pgdata
+pgdata_bk
 static
+backup
 node_modules
 .env

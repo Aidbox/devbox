@@ -5,6 +5,6 @@
   }
  :import
  {
-  ;; :icd-10 {}
-  ;; :fhirterm-3.3.0 {}
+  ;;:icd-10 {}
+  ;;:fhirterm-3.3.0 {}
   }}
