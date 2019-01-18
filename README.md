@@ -22,6 +22,6 @@ migrate your data using migration script.
 ```
 
 After migration your database dump will be stored in to `./backup/backup.sql` file,
-and all PostgreSQL cluster folder will copied in to `pgdata_bk` folder
+and all PostgreSQL cluster folder will copied in to `pgdata_bk` folder.
 
 Powered by [Health Samurai](http://www.health-samurai.io) | [Aidbox](http://www.health-samurai.io/aidbox) | [Fhirbase](http://www.health-samurai.io/fhirbase)
