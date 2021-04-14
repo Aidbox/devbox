@@ -1,6 +1,19 @@
-version: '3.1'
+version: '3.7'
 services:
+  devbox-db:
+    container_name: "devbox-db"
+    image: "${PGIMAGE}"
+    ports:
+      - "${PGHOSTPORT}:${PGPORT}"
+    volumes:
+    - "./pgdata:/data"
+    environment:
+      POSTGRES_USER:     "${PGUSER}"
+      POSTGRES_PASSWORD: "${PGPASSWORD}"
+      POSTGRES_DB:       "${PGDATABASE}"
+
   devbox:
+    container_name: "devbox"
     image: "${AIDBOX_IMAGE}"
     depends_on:
       - "devbox-db"
@@ -12,16 +25,3 @@ services:
       - .env
     environment:
       PGHOST: database
-      AIDBOX_CONFIG: /var/config/config.edn
-    volumes:
-      - ./config:/var/config
-  devbox-db:
-    image: "${PGIMAGE}"
-    ports:
-      - "${PGHOSTPORT}:${PGPORT}"
-    volumes:
-    - "./pgdata:/data"
-    environment:
-      POSTGRES_USER:     "${PGUSER}"
-      POSTGRES_PASSWORD: "${PGPASSWORD}"
-      POSTGRES_DB:       "${PGDATABASE}"
