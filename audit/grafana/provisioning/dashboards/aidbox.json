@@ -1,0 +1,451 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "cards": {
+        "cardPadding": null,
+        "cardRound": null
+      },
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateOranges",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "timeseries",
+      "datasource": "aidbox-logs",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "heatmap": {},
+      "hideZeroBuckets": false,
+      "highlightCards": true,
+      "id": 4,
+      "legend": {
+        "show": false
+      },
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "ts",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "d",
+              "id": "1",
+              "type": "avg"
+            }
+          ],
+          "query": "ev:\"w/resp\"",
+          "queryType": "randomWalk",
+          "refId": "A",
+          "timeField": "ts"
+        }
+      ],
+      "title": "Request's Duration Hitmap",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "xBucketNumber": null,
+      "xBucketSize": null,
+      "yAxis": {
+        "decimals": null,
+        "format": "short",
+        "logBase": 1,
+        "max": null,
+        "min": null,
+        "show": true,
+        "splitFactor": null
+      },
+      "yBucketBound": "auto",
+      "yBucketNumber": null,
+      "yBucketSize": null
+    },
+    {
+      "datasource": "aidbox-logs",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ts"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sql"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1155
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tn"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 119
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "d"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 64
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "d (max)"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 69
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "d (mean)"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 96
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "d (sum)"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "d (max)"
+          }
+        ]
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "size": "100"
+              },
+              "type": "raw_data"
+            }
+          ],
+          "query": "ev:\"db/q\"",
+          "queryType": "randomWalk",
+          "refId": "A",
+          "timeField": "ts"
+        }
+      ],
+      "title": "Slow Queries",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "_id": true,
+              "_index": true,
+              "_type": true,
+              "ctx": true,
+              "ev": true,
+              "highlight": true,
+              "op": true,
+              "sort": true,
+              "tn": false,
+              "ts": true,
+              "w": true
+            },
+            "indexByName": {
+              "_id": 1,
+              "_index": 2,
+              "_type": 3,
+              "ctx": 4,
+              "d": 5,
+              "ev": 8,
+              "highlight": 9,
+              "op": 10,
+              "sort": 11,
+              "sql": 6,
+              "tn": 7,
+              "ts": 0,
+              "w": 12
+            },
+            "renameByName": {
+              "d": "",
+              "tn": "box"
+            }
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "box": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "d": {
+                "aggregations": [
+                  "max",
+                  "mean",
+                  "sum"
+                ],
+                "operation": "aggregate"
+              },
+              "sql": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "box": 4,
+              "d (max)": 0,
+              "d (mean)": 1,
+              "d (sum)": 2,
+              "sql": 3
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "aidbox-logs",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "w_m.keyword",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "0",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "ts",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "ev:\"w/resp\"",
+          "queryType": "randomWalk",
+          "refId": "A",
+          "timeField": "ts"
+        }
+      ],
+      "title": "Requests",
+      "type": "timeseries"
+    }
+  ],
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Aidbox",
+  "uid": "u2worNmnk",
+  "version": 1
+}

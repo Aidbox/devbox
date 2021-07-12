@@ -17,11 +17,54 @@ services:
     image: "${AIDBOX_IMAGE}"
     depends_on:
       - "devbox-db"
+      - es
     links:
       - "devbox-db:database"
+      - es:es
     ports:
       - "${AIDBOX_PORT}:${AIDBOX_PORT}"
     env_file:
       - .env
     environment:
       PGHOST: database
+      AIDBOX_ES_URL: http://es:9200/
+
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    volumes:
+      - ./.esdata:/usr/share/elasticsearch/data
+    environment:
+      - cluster.name=aidbox
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+
+  kibana:
+    depends_on:
+      - "es"
+    links:
+      - "es:es"
+    image: docker.elastic.co/kibana/kibana:7.13.2
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://es:9200
+
+  grafana:
+    depends_on:
+      - "es"
+    links:
+      - "es:es"
+    volumes:
+      - ./.grafana:/var/lib/grafana
+      - ./audit/grafana/provisioning:/etc/grafana/provisioning
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    user: "104"
