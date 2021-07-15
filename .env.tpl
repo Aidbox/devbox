@@ -2,8 +2,8 @@
 PGIMAGE=healthsamurai/aidboxdb:13.2
 
 # aidbox image to run
-AIDBOX_IMAGE=healthsamurai/devbox:stable
-# AIDBOX_IMAGE=healthsamurai/devbox:edge
+# AIDBOX_IMAGE=healthsamurai/devbox:stable
+AIDBOX_IMAGE=healthsamurai/devbox:edge
 
 # license details
 

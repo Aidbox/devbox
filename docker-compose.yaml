@@ -27,12 +27,15 @@ services:
       - .env
     environment:
       PGHOST: database
-      AIDBOX_ES_URL: http://es:9200/
+      AIDBOX_ES_URL: "http://es:9200/"
+      AIDBOX_ES_BATCH_SIZE: 10
+      AIDBOX_ES_BATCH_TIMEOUT: 5000
+      AIDBOX_ES_INDEX_PAT: "'aidbox-logs'-yyyy-MM-dd"
 
   es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.13.2"
     volumes:
-      - ./.esdata:/usr/share/elasticsearch/data
+      - "./.esdata:/usr/share/elasticsearch/data"
     environment:
       - cluster.name=aidbox
       - bootstrap.memory_lock=true
@@ -50,11 +53,11 @@ services:
       - "es"
     links:
       - "es:es"
-    image: docker.elastic.co/kibana/kibana:7.13.2
+    image: "docker.elastic.co/kibana/kibana:7.13.2"
     ports:
       - "5601:5601"
     environment:
-      ELASTICSEARCH_HOSTS: http://es:9200
+      ELASTICSEARCH_HOSTS: "http://es:9200"
 
   grafana:
     depends_on:
@@ -62,8 +65,8 @@ services:
     links:
       - "es:es"
     volumes:
-      - ./.grafana:/var/lib/grafana
-      - ./audit/grafana/provisioning:/etc/grafana/provisioning
+      - "./.grafana:/var/lib/grafana"
+      - "./audit/grafana/provisioning:/etc/grafana/provisioning"
     image: grafana/grafana
     ports:
       - 3000:3000
