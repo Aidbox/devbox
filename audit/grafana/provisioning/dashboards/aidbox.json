@@ -519,7 +519,7 @@
           "timeField": "ts"
         }
       ],
-      "title": "Request's Duration Hitmap",
+      "title": "Request's Duration Heatmap",
       "tooltip": {
         "show": true,
         "showHistogram": true
