@@ -15,9 +15,7 @@ services:
   devbox:
     container_name: "devbox"
     image: "${AIDBOX_IMAGE}"
-    depends_on:
-      - "devbox-db"
-      - es
+    depends_on: ["devbox-db", "es", "apm-server"]
     links:
       - "devbox-db:database"
       - es:es
@@ -31,6 +29,7 @@ services:
       AIDBOX_ES_BATCH_SIZE: 10
       AIDBOX_ES_BATCH_TIMEOUT: 5000
       AIDBOX_ES_INDEX_PAT: "'aidbox-logs'-yyyy-MM-dd"
+      ELASTIC_APM_SERVER_URLS: "http://apm-server:8200"
 
   es:
     image: "docker.elastic.co/elasticsearch/elasticsearch:7.13.2"
@@ -71,3 +70,20 @@ services:
     ports:
       - 3000:3000
     user: "104"
+
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:7.13.4
+    depends_on: ['es', 'kibana' ]
+    cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
+    cap_drop: ["ALL"]
+    ports:
+    - 8200:8200
+    links:
+      - "es:es"
+    command: >
+       apm-server -e
+         -E setup.kibana.host=kibana:5601
+         -E setup.template.settings.index.number_of_replicas=0
+         -E apm-server.kibana.enabled=true
+         -E apm-server.kibana.host=kibana:5601
+         -E output.elasticsearch.hosts=["es:9200"]
