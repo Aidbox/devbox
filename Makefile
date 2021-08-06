@@ -3,6 +3,10 @@
 up:
 	docker-compose up -d
 
+update:
+	docker-compose pull
+	docker-compose up -d
+
 down:
 	docker-compose down
 
