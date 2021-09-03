@@ -1,0 +1,10 @@
+{ns my-zen-devbox
+ import #{hl7-fhir-us-core.us-core-patient}
+
+ MyPatientProfile
+ {:zen/tags #{zen/schema zenbox/profile-schema}
+  :confirms #{hl7-fhir-us-core.us-core-patient/schema}
+  :zenbox/type "Patient"
+  :zenbox/profileUri "urn:profile:MyPatientProfile"
+  :type zen/map
+  :require #{:birthDate}}}

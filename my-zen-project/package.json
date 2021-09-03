@@ -1,0 +1,11 @@
+{
+  "name": "my-zen-project",
+  "version": "1.0.0",
+  "description": "Sample Aidbox Zen project",
+  "author": "HealthSamurai",
+  "license": "MIT",
+  "dependencies": {
+    "@zen-lang/fhir-r4": "latest",
+    "@zen-lang/us-core-v3": "latest"
+  }
+}

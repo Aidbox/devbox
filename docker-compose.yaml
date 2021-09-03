@@ -30,6 +30,8 @@ services:
       AIDBOX_ES_BATCH_TIMEOUT: 5000
       AIDBOX_ES_INDEX_PAT: "'aidbox-logs'-yyyy-MM-dd"
       ELASTIC_APM_SERVER_URLS: "http://apm-server:8200"
+    volumes:
+    - "./my-zen-project:/my-zen-project"
 
   es:
     image: "docker.elastic.co/elasticsearch/elasticsearch:7.13.2"
