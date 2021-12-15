@@ -1417,8 +1417,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Aidbox Metrics",
-  "uid": "aidbox-perf-test",
+  "title": "Performance Metrics (Aidbox)",
+  "uid": "aidbox-perf-test-aidbox",
   "version": 3,
   "weekStart": ""
 }

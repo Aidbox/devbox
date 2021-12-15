@@ -669,8 +669,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Aidbox Metrics",
-  "uid": "aidbox-perf-test",
+  "title": "Performance Metrics (HAPI)",
+  "uid": "aidbox-perf-test-hapi",
   "version": 4,
   "weekStart": ""
 }
