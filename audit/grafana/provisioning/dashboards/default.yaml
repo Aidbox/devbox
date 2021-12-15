@@ -6,3 +6,13 @@ providers:
     type: file
     options:
       path: /etc/grafana/provisioning/dashboards/aidbox.json  
+  - name: Performance test (HAPI)
+    folder: Performance
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards/perftest-hapi.json
+  - name: Performance test (Aidbox)
+    folder: Performance
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards/perftest-aidbox.json

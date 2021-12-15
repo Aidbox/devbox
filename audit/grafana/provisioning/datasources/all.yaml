@@ -12,3 +12,9 @@ datasources:
       esVersion: "7.0.0"
       logMessageField: message
       logLevelField: fields.level
+  - name: Prometheus
+    #    uid: prom
+    type: prometheus
+    access: proxy
+    database: "*"
+    url: http://prometheus:9090
