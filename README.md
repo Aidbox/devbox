@@ -9,7 +9,7 @@ application.
 Read more instructions at [Aidbox Documentation page](https://docs.aidbox.app/installation/setup-aidbox.dev)
 
 ## Performance tests
-- Download [infrabox jar](https://storage.cloud.google.com/libox/infrabox/genops.jar).
+- Download [infrabox jar](https://storage.googleapis.com/libox/infrabox/genops.jar).
 - Start docker containers
   ```bash
   $ docker compose up
