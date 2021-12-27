@@ -32,6 +32,7 @@ services:
       AIDBOX_ES_BATCH_SIZE: 10
       AIDBOX_ES_BATCH_TIMEOUT: 5000
       AIDBOX_ES_INDEX_PAT: "'aidbox-logs'-yyyy-MM-dd"
+      BOX_METRICS_PORT: 8889
       ELASTIC_APM_SERVER_URLS: "http://apm-server:8200"
 
   pushgateway:
