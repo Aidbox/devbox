@@ -32,7 +32,7 @@ Test suite truncates `Patient` and `Encounter` tables then creates set of search
 
 - `Patient.name`
 - `Patient.name.family`
-- `Patient.​birthDate`
+- `Patient.birthDate`
 
 #### Testing
 
