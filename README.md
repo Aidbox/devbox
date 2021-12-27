@@ -22,13 +22,13 @@ application.
   ```
 - Go to 'Performance test (Aidbox)' Grafana dashboard on http://localhost:3000
 
-Now you should see performance plots.
+Now you should see performance graphs.
 
 ### How testing works
 
 #### On start-up
 
-Test suite truncates `Patient` and `Encounter` tables then creates set of search parameters indexes in order to reach the best performance
+Test suite truncates `Patient` and `Encounter` tables then creates set of search parameters indexes
 
 - `Patient.name`
 - `Patient.name.family`
@@ -44,3 +44,10 @@ Each test does the following:
 4. Reads Encounter by id
 5. Searches count of Patients by name and birthDate
 6. Searches count of Patients by family
+
+
+## Sample Grafana dashboard
+
+![image](https://user-images.githubusercontent.com/9136211/147488532-78e744b1-f51f-478f-8953-657a5f93ed0b.png)
+
+![image](https://user-images.githubusercontent.com/9136211/147488586-f19b4173-07e4-4d9a-bc70-fbc0100c5bc4.png)
