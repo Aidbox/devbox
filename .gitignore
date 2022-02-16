@@ -9,3 +9,4 @@ node_modules
 license.edndocker-commpose.yaml
 docker-commpose.yaml
 docker-commpose.yaml.old
+docker-compose.yaml
