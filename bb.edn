@@ -1,0 +1,64 @@
+{:deps  {cprop/cprop {:mvn/version "0.1.18"}}
+ :paths ["scripts"]
+ :tasks {:requires    ([babashka.fs :as fs]
+                       [cprop.core :refer [load-config]]
+                       [cprop.source :refer [from-env]]
+                       [babashka.process :as p :refer [process]]
+                       [babashka.wait :as wait]
+                       [babashka.curl :as curl]
+                       [clojure.edn :as edn]
+                       [clojure.java.io :as io]
+                       [compose])
+         ;; helpers and constants
+         :init        (do
+                        (def lic (edn/read-string (slurp "license.edn")))
+                        (def cfg (assoc (edn/read-string (slurp "aidbox.edn")) :license lic)))
+         :enter       (do)
+         :leave       (do)
+
+         repl (let [port (with-open [sock (java.net.ServerSocket. 0)] (.getLocalPort sock))
+                    proc (process (str "bb nrepl-server " port) {:inherit true})]
+                (wait/wait-for-port "localhost" port)
+                (spit ".nrepl-port" port)
+                (fs/delete-on-exit ".nrepl-port")
+                (deref proc))
+
+         up    {:doc "start aidbox"
+                :task (do (compose/generate-compose cfg)
+                          (shell "docker-compose up -d")
+                          (let [aidbox-url (str "http://localhost:" (get-in cfg [:aidbox :host-port]) "/health")]
+                            (loop [i 0]
+                              (if (> i (* 3 60))
+                                (do
+                                  (println "Could not get response from aidbox in 3 min - maybe something wrong. Let's take a look at logs")
+                                  (shell "docker logs -f devbox"))
+                                (if (= 200 (:status (curl/get aidbox-url {:throw false})))
+                                  (println "Aidbox started - open browser at " aidbox-url " login with " (get-in cfg [:aidbox :admin]))
+                                  (do (println ".") (Thread/sleep 1000) (recur (inc i))))))))}
+
+         ps    {:doc "show services"
+                :task (shell "docker-compose ps")}
+
+         stop  {:doc "stop aidbox"
+                :task (shell "docker-compose stop")}
+
+         logs  {:doc "show aidbox logs"
+                :task (shell "docker-compose logs -f devbox")}
+
+         update {:doc "update aidbox image and restart"
+                 :task (do
+                         (shell (str "docker pull " (get-in cfg [:aidbox :image])))
+                         (shell "docker-compose restart"))}
+
+         perf {:doc "Run performance test"
+               :task (do (println "Run performance tests"))}
+
+         psql {:doc "psql to postgres"
+               :tasks (shell (str "docker-compose exec db psql " (get-in cfg [:db :database])))}
+
+         prune-db {:doc "clear database"
+                   :task (do)}
+         
+
+         }}
+

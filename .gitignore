@@ -6,3 +6,6 @@ node_modules
 .env
 .esdata
 .grafana
+license.edndocker-commpose.yaml
+docker-commpose.yaml
+docker-commpose.yaml.old
