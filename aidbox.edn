@@ -1,7 +1,10 @@
 {:aidbox
- {:image "healthsamurai/devbox:edge"
+ {
+  :image "healthsamurai/devbox:edge"
   ;; :image "healthsamurai/devbox:stable"
   ;; :image "healthsamurai/devbox:latest"
+  :aidbox "devbox"
+  :channel "edge"
   :fhir "4.0.1"
   :host-port 8888
   :admin  {:id "admin" :password "secret"}
@@ -25,11 +28,13 @@
 
  :elastic
  {:desc "Enable loging to Elastic"
-  :enable false}
+  :enable false
+  }
 
  :monitoring
  {:desc "Enable Prometheus monitoring"
-  :enable false}
+  :enable false
+  }
 
  :apm
  {:desc "Enable Elastic APM"
