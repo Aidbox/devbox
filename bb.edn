@@ -43,6 +43,9 @@
                                   (println "Aidbox started - open browser at " aidbox-url " login with " (get-in cfg [:aidbox :admin]))
                                   (do (println ".") (Thread/sleep 1000) (recur (inc i))))))))}
 
+         down  {:doc "stop aidbox"
+                :task (shell "docker-compose down")}
+
          ps    {:doc "show services"
                 :task (shell "docker-compose ps")}
 
