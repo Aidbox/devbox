@@ -8,11 +8,12 @@
                        [babashka.curl :as curl]
                        [clojure.edn :as edn]
                        [clojure.java.io :as io]
-                       [compose])
+                       [clojure.pprint]
+                       [compose]
+                       [utils])
          ;; helpers and constants
          :init        (do
-                        (def lic (edn/read-string (slurp "license.edn")))
-                        (def cfg (assoc (edn/read-string (slurp "aidbox.edn")) :license lic)))
+                        (def cfg (utils/read-config)))
          :enter       (do)
          :leave       (do)
 
@@ -21,11 +22,15 @@
                 (wait/wait-for-port "localhost" port)
                 (spit ".nrepl-port" port)
                 (fs/delete-on-exit ".nrepl-port")
+                (println :nrepl/port port)
                 (deref proc))
+
+         cfg {:doc "print config"
+              :task (do (clojure.pprint/pprint cfg))}
 
          up    {:doc "start aidbox"
                 :task (do (compose/generate-compose cfg)
-                          (shell "docker-compose up -d")
+                          (shell "docker-compose up -d --remove-orphans")
                           (let [aidbox-url (str "http://localhost:" (get-in cfg [:aidbox :host-port]) "/health")]
                             (loop [i 0]
                               (if (> i (* 3 60))

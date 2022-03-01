@@ -3,18 +3,15 @@
   :image "healthsamurai/devbox:edge"
   ;; :image "healthsamurai/devbox:stable"
   ;; :image "healthsamurai/devbox:latest"
-  :aidbox "devbox"
-  :channel "edge"
+  :zen {:desc "Enable zen project"
+        :enable true
+        :entrypoint "mybox/box"
+        :paths "/zrc"}
   :fhir "4.0.1"
   :host-port 8888
   :admin  {:id "admin" :password "secret"}
   :client {:id "root" :secret "secret"}
   :logs :stdout
-  :zen {:desc "Enable zen project"
-        :enable false
-        :path "project"
-        ;; enable dev mode
-        :dev-mode true}
   :config {:search {:timeout 10 :count 30}
            :debug  {:policy true}}}
 
@@ -26,14 +23,16 @@
   :database "devbox"
   :host-port 5437}
 
- :elastic
+ :logging
  {:desc "Enable loging to Elastic"
+  :type :elastic
   :enable false
   }
 
  :monitoring
  {:desc "Enable Prometheus monitoring"
   :enable false
+  ;; :image "prom/prometheus:v2.30.3"
   }
 
  :apm
@@ -42,5 +41,6 @@
 
  :perf
  {:desc "Configure performance tests"
+  :enabled false
 
   }}

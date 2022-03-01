@@ -1,0 +1,135 @@
+{ns mybox
+ import #{aidbox aidbox.rest aidbox.rest.v1}
+
+ ;; Share User Specific Data
+ access-api
+ {:zen/tags #{aidbox.rest/api}
+  "Patient" {:GET   pt-search-op
+             [:id]  {:GET    pt-read-op
+                     :PUT    pt-update-op
+                     :DELETE pt-delete-op}}
+
+  "Observation" {:middlewares  [inject-patient-search-parameter-mw]
+                 :GET   obs-search-op
+                 :POST  obs-create-op
+                 [:id]  {:GET    obs-read-op
+                         :PUT    obs-update-op
+                         :DELETE obs-delete-op}}}
+
+ ;; Middlewares
+ ;; Inject user.data.pid value as _id parameter
+ inject-patient-id-mw
+ {:zen/tags #{aidbox.rest/middleware}
+  :engine aidbox.rest.v1/params-middleware
+  :params {:_id {:path     [:user :data :pid]
+                 :required true}}}
+
+ ;; Ensure that user.data.pid is equal route-params.id
+ id-match-mw
+ {:zen/tags #{aidbox.rest/middleware}
+  :engine aidbox.rest.v1/match-middleware
+  :match {:patient-id {:path     [:user :data :pid]
+                       :target   [:route-params :id]}}}
+
+ ;; Inject patient search parameter from user.data.pid
+ inject-patient-search-parameter-mw
+ {:zen/tags #{aidbox.rest/middleware}
+  :engine aidbox.rest.v1/params-middleware
+  :params {:patient {:path     [:user :data :pid]
+                     :required true}}}
+
+ ;; Inject subject
+ inject-subject-mw
+ {:zen/tags #{aidbox.rest/middleware}
+  :engine aidbox.rest.v1/transform-middleware
+  :rules  {[:resource :subject :id]            [:params :patient]
+           [:resource :subject :resourceType]  "Patient"}}
+
+ ;; Parameters
+ ;; Api constructor search parameter
+ observation-patient-param
+ {:zen/tags   #{aidbox.rest/param}
+  :engine     aidbox.rest.v1/param
+  :search-by  aidbox.rest.v1/search-by-knife
+  :name       "patient"
+  :expression [["subject" "id"]]}
+
+
+ ;; Operations
+ ;; Patient operations
+ pt-search-op
+ {:zen/tags #{aidbox.rest/op}
+  :middlewares [inject-patient-id-mw]
+  :engine aidbox.rest.v1/search
+  :resource "Patient"}
+
+ pt-read-op
+ {:zen/tags #{aidbox.rest/op}
+  :middlewares  [id-match-mw]
+  :engine aidbox.rest.v1/read
+  :resource "Patient"}
+
+ pt-update-op
+ {:zen/tags #{aidbox.rest/op}
+  :middlewares  [id-match-mw]
+  :engine aidbox.rest.v1/update
+  :resource "Patient"}
+
+ pt-delete-op
+ {:zen/tags #{aidbox.rest/op}
+  :middlewares  [id-match-mw]
+  :engine aidbox.rest.v1/delete
+  :resource "Patient"}
+
+ ;; Observation operations
+ obs-search-op
+ {:zen/tags  #{aidbox.rest/op}
+  :engine    aidbox.rest.v1/search
+  :resource  "Observation"
+  :format    "aidbox"}
+
+ obs-read-op
+ {:zen/tags    #{aidbox.rest/op}
+  :engine      aidbox.rest.v1/read
+  :params      {:patient observation-patient-param}
+  :resource    "Observation"
+  :format      "aidbox"}
+
+ obs-create-op
+ {:zen/tags    #{aidbox.rest/op}
+  :engine      aidbox.rest.v1/create
+  :params      {:patient observation-patient-param}
+  :resource    "Observation"
+  :format      "aidbox"}
+
+ obs-update-op
+ {:zen/tags    #{aidbox.rest/op}
+  :engine      aidbox.rest.v1/update
+  :middlewares [inject-subject-mw]
+  :params      {:patient observation-patient-param}
+  :resource    "Observation"
+  :format      "aidbox"}
+
+ obs-delete-op
+ {:zen/tags    #{aidbox.rest/op}
+  :params      {:patient observation-patient-param}
+  :engine      aidbox.rest.v1/delete
+  :resource    "Observation"
+  :format      "aidbox"}
+
+
+ api
+ {:zen/tags #{aidbox.rest/api}
+  "access"  {:apis #{access-api}}}
+
+ server
+ {:zen/tags #{aidbox/service}
+  :engine   aidbox/http
+  :apis     #{api}}
+
+ box
+ {:zen/tags #{aidbox/system}
+  :zen/desc "test server"
+  :services {:http server}}
+
+ }

@@ -1,0 +1,14 @@
+version: '3.7'
+volumes: {db: null}
+services:
+  db:
+    image: healthsamurai/aidboxdb:13.2
+    ports: ['5437:5432']
+    volumes: ['db:/data']
+    environment: {POSTGRES_USER: postgres, POSTGRES_PASSWORD: postgres, POSTGRES_DB: devbox}
+  devbox:
+    image: healthsamurai/devbox:edge
+    links: ['db:db']
+    ports: ['8888:8080']
+    volumes: ['./zrc:/zrc']
+    environment: {AIDBOX_ZEN_PATHS: 'path:dir:/zrc', AIDBOX_STDOUT_PRETTY: ok, AIDBOX_LICENSE_KEY: d5121cb5f6da4f118f5c2d47dac3a647, AIDBOX_CLIENT_ID: root, AIDBOX_CLIENT_SECRET: secret, AIDBOX_ZEN_ENTRY: mybox, AIDBOX_ADMIN_PASSWORD: secret, AIDBOX_LICENSE_ID: 9664472de3bd449, AIDBOX_ZEN_DEV_MODE: enable, PGHOST: db, AIDBOX_ADMIN_ID: admin, PGUSER: postgres, AIDBOX_PORT: 8080, PGDATABASE: devbox, PGPASSWORD: postgres, PGPORT: 5432, AIDBOX_FHIR_VERSION: 4.0.1, BOX_ENTRYPOINT: mybox/box}
