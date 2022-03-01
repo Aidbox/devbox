@@ -31,13 +31,14 @@
          up    {:doc "start aidbox"
                 :task (do (compose/generate-compose cfg)
                           (shell "docker-compose up -d --remove-orphans")
-                          (let [aidbox-url (str "http://localhost:" (get-in cfg [:aidbox :host-port]) "/health")]
+                          (let [aidbox-url (str "http://localhost:" (get-in cfg [:aidbox :host-port]))
+                                health-url (str aidbox-url "/health")]
                             (loop [i 0]
                               (if (> i (* 3 60))
                                 (do
                                   (println "Could not get response from aidbox in 3 min - maybe something wrong. Let's take a look at logs")
                                   (shell "docker logs -f devbox"))
-                                (if (= 200 (:status (curl/get aidbox-url {:throw false})))
+                                (if (= 200 (:status (curl/get health-url {:throw false})))
                                   (println "Aidbox started - open browser at " aidbox-url " login with " (get-in cfg [:aidbox :admin]))
                                   (do (println ".") (Thread/sleep 1000) (recur (inc i))))))))}
 
