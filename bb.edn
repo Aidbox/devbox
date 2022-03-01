@@ -30,6 +30,7 @@
 
          up    {:doc "start aidbox"
                 :task (do (compose/generate-compose cfg)
+                          (shell "docker-compose pull")
                           (shell "docker-compose up -d --remove-orphans")
                           (let [aidbox-url (str "http://localhost:" (get-in cfg [:aidbox :host-port]))
                                 health-url (str aidbox-url "/health")]
