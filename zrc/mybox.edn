@@ -1,6 +1,19 @@
 {ns mybox
  import #{aidbox aidbox.rest aidbox.rest.v1}
 
+ access-sql
+ {:zen/tags #{aidbox.rest/api}
+  "Observation" {:middlewares  [inject-patient-search-parameter-mw check-pid-mw]
+                 [:id]  {:GET    obs-read-op
+                         :PUT    obs-update-op
+                         :DELETE obs-delete-op}}}
+
+ check-pid-mw
+ {:zen/tags #{aidbox.rest/middleware}
+  :engine aidbox.rest.v1/sql-access-middleware
+  :sql "select true from userpatient where user_id = {{user.id}} and patient_id = {{params.patient}} limit 1"
+  :message "User not matched"}
+
  ;; Share User Specific Data
  access-api
  {:zen/tags #{aidbox.rest/api}
@@ -120,6 +133,7 @@
 
  api
  {:zen/tags #{aidbox.rest/api}
+  "access-sql" {:apis #{access-sql}}
   "access"  {:apis #{access-api}}}
 
  server
