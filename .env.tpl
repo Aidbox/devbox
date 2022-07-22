@@ -7,8 +7,7 @@ AIDBOX_IMAGE=healthsamurai/devbox:edge
 
 # license details
 
-AIDBOX_LICENSE_ID=<your-license-id>
-AIDBOX_LICENSE_KEY=<your-license-key>
+AIDBOX_LICENSE=<your-license>
 
 # Client to create on start up
 AIDBOX_CLIENT_ID=root
