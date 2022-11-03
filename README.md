@@ -1,4 +1,6 @@
-# Aidbox.Dev - Aidbox Developer Version (aka Devbox)
+# Deprecated. Moved to https://github.com/Aidbox/aidbox-docker-compose
+
+## Aidbox.Dev - Aidbox Developer Version (aka Devbox)
 
 This repository contains auxiliary files to help you quickly run
 Aidbox.Dev on your local workstation and start creating your first FHIR
